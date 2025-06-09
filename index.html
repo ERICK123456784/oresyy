@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TasteTanzania Restaurant</title>
+  <style>
+    * { box-sizing: border-box; scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f8f9fa;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      background-color: #004d00;
+      display: flex;
+      justify-content: space-around;
+      padding: 0.7rem;
+      z-index: 1000;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    nav a, nav select {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 15px;
+      background: transparent;
+      border: none;
+    }
+
+    header {
+      background-color: #006400;
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .carousel {
+      width: 100%;
+      max-height: 200px;
+      overflow: hidden;
+    }
+
+    .carousel img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: none;
+    }
+
+    .carousel img.active {
+      display: block;
+    }
+
+    .menu, .cart {
+      padding: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .item {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      width: 220px;
+      margin: 10px;
+      overflow: hidden;
+    }
+
+    .item img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+
+    .item-content {
+      padding: 10px;
+    }
+
+    .item-content h3, .item-content p {
+      margin: 0.5em 0;
+    }
+
+    .item-content button {
+      background-color: #006400;
+      color: white;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .cart textarea, .cart input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .cart .total {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .cart button {
+      margin-top: 15px;
+      background-color: #ffa500;
+      color: white;
+      border: none;
+      padding: 12px;
+      width: 100%;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #006400;
+      color: white;
+    }
+
+    .socials a {
+      margin: 0 10px;
+      color: white;
+      text-decoration: none;
+    }
+
+    @media (max-width: 600px) {
+      .item { width: 90%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <a href="#home" data-key="homeLink">Home</a>
+  <a href="#menu" data-key="menuLink">Menu</a>
+  <a href="#order" data-key="orderLink">Order</a>
+  <a href="#contact" data-key="contactLink">Contact</a>
+  <select onchange="changeLanguage(this.value)">
+    <option value="en">🇬🇧 English</option>
+    <option value="sw">🇹🇿 Swahili</option>
+  </select>
+</nav>
+
+<!-- Header -->
+<header id="home">
+  <h1 id="headerTitle">🍴 Emmy Food Zone</h1>
+  <p id="headerDesc">Karibu! Enjoy the best local & international dishes.</p>
+</header>
+
+<!-- Carousel -->
+<div class="carousel">
+  <img src="makange ya kuku - Copy.jpg" class="active">
+  <img src="ndizinyama - Copy.jpg">
+  <img src="pilauchiken - Copy.jpg">
+</div>
+
+<!-- Menu -->
+<section class="menu" id="menu">
+  <div class="item">
+    <img src="ugalinyama - Copy.jpg">
+    <div class="item-content">
+      <h3 data-key="ugaliTitle">Ugali Nyama</h3>
+      <p data-key="ugaliPrice">TZS 7,000</p>
+      <button onclick="addToCart('Ugali Nyama', 7000)" data-key="addBtn">Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="item">
+    <img src="pilauchiken - Copy.jpg">
+    <div class="item-content">
+      <h3 data-key="pilauTitle">Pilau Chicken</h3>
+      <p data-key="pilauPrice">TZS 8,500</p>
+      <button onclick="addToCart('Pilau Chicken', 8500)" data-key="addBtn">Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="item">
+    <img src="makange ya kuku - Copy.jpg">
+    <div class="item-content">
+      <h3 data-key="pilauTitle">Makange ya Kuku</h3>
+      <p data-key="pilauPrice">TZS 9,500</p>
+      <button onclick="addToCart('Makange ya Kuku', 9500)" data-key="addBtn">Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="item">
+    <img src="walimaharage - Copy.jpg">
+    <div class="item-content">
+      <h3 data-key="pilauTitle">Wali Maharage</h3>
+      <p data-key="pilauPrice">TZS 2,500</p>
+      <button onclick="addToCart('Wali Maharage', 2500)" data-key="addBtn">Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="item">
+    <img src="ndizinyama - Copy.jpg">
+    <div class="item-content">
+      <h3 data-key="pilauTitle">Ndizi Nyama</h3>
+      <p data-key="pilauPrice">TZS 8,000</p>
+      <button onclick="addToCart('Ndizi Nyama', 8000)" data-key="addBtn">Add to Cart</button>
+    </div>
+  </div>
+</section>
+
+<!-- Order Summary -->
+<section class="cart" id="order">
+  <h2 data-key="orderSummary">Order Summary</h2>
+  <textarea id="cartItems" rows="5" readonly></textarea>
+  <div class="total" data-key="totalLabel">Total: TZS <span id="totalAmount">0</span></div>
+  <input type="text" id="name" placeholder="Your Name" />
+  <input type="email" id="email" placeholder="Your Email" />
+  <input type="text" id="address" placeholder="Delivery Address" />
+  <button onclick="placeOrder()" data-key="sendBtn">Send Bill & Order</button>
+</section>
+
+<!-- Footer -->
+<footer id="contact">
+  <p data-key="connect">Connect with us:</p>
+  <div class="socials">
+    <a href="https://wa.me/255683446199" target="_blank">WhatsApp</a> |
+    <a href="https://tiktok.com/@yourrestaurant" target="_blank">TikTok</a> |
+    <a href="https://instagram.com/yourrestaurant" target="_blank">Instagram</a> |
+    <a href="https://facebook.com/yourrestaurant" target="_blank">Facebook</a>
+  </div>
+  <p>&copy; 2025 Emmy Food Zone</p>
+</footer>
+
+<script>
+  // Carousel
+  let slides = document.querySelectorAll(".carousel img");
+  let index = 0;
+  setInterval(() => {
+    slides[index].classList.remove("active");
+    index = (index + 1) % slides.length;
+    slides[index].classList.add("active");
+  }, 3000);
+
+  // Cart
+  let cart = [];
+  let total = 0;
+
+  function addToCart(item, price) {
+    cart.push({ item, price });
+    total += price;
+    updateCart();
+  }
+
+  function updateCart() {
+    document.getElementById("cartItems").value = cart.map(c => `${c.item} - TZS ${c.price}`).join('\n');
+    document.getElementById("totalAmount").textContent = total.toLocaleString();
+  }
+
+  function placeOrder() {
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const address = document.getElementById("address").value;
+    if (!name || !email || !address || cart.length === 0) {
+      alert(currentLang === 'en' ? "Fill all fields and add items." : "Jaza kila sehemu na ongeza bidhaa.");
+      return;
+    }
+    alert((currentLang === 'en' ? "Thank you Welcom Again:Order sent to " : "Asante Karibu Tena:Oda imetumwa kwa ") + email);
+    cart = [];
+    total = 0;
+    updateCart();
+    document.getElementById("name").value = '';
+    document.getElementById("email").value = '';
+    document.getElementById("address").value = '';
+  }
+
+  // Multilanguage Support
+  let currentLang = 'en';
+
+  const translations = {
+    en: {
+      homeLink: "Home",
+      menuLink: "Menu",
+      orderLink: "Order",
+      contactLink: "Contact",
+      headerDesc: "Welcome! Enjoy the best local & international dishes.",
+      ugaliTitle: "Ugali Nyama",
+      ugaliPrice: "TZS 7,000",
+      pilauTitle: "Pilau Chicken",
+      pilauPrice: "TZS 8,500",
+      addBtn: "Add to Cart",
+      orderSummary: "Order Summary",
+      totalLabel: "Total: TZS",
+      sendBtn: "Send Bill & Order",
+      connect: "Connect with us:"
+    },
+    sw: {
+      homeLink: "Nyumbani",
+      menuLink: "Menyu",
+      orderLink: "Oda",
+      contactLink: "Mawasiliano",
+      headerDesc: "Karibu! Furahia chakula bora cha kienyeji na kimataifa.",
+      ugaliTitle: "Ugali Nyama",
+      ugaliPrice: "TZS 7,000",
+      pilauTitle: "Pilau Kuku",
+      pilauPrice: "TZS 8,500",
+      addBtn: "Ongeza Kikapuni",
+      orderSummary: "Muhtasari wa Oda",
+      totalLabel: "Jumla: TZS",
+      sendBtn: "Tuma Oda",
+      connect: "Tufikie kupitia:"
+    }
+  };
+
+  function changeLanguage(lang) {
+    currentLang = lang;
+    document.querySelectorAll("[data-key]").forEach(el => {
+      const key = el.getAttribute("data-key");
+      if (translations[lang][key]) {
+        if (key.includes("Price")) return; // Prices stay same
+        el.innerText = translations[lang][key];
+      }
+    });
+    document.getElementById("headerDesc").innerText = translations[lang]["headerDesc"];
+  }
+</script>
+
+</body>
+</html>
